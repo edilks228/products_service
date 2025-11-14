@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Список товаров</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+
+    header {
+      background-color: #4a90e2;
+      color: white;
+      padding: 15px 30px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-right: 20px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 30px;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      border-bottom: 1px solid #ddd;
+      padding: 12px 15px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f0f0f0;
+      font-weight: bold;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    .actions a {
+      text-decoration: none;
+      color: #4a90e2;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    .actions a:hover {
+      text-decoration: underline;
+    }
+
+    .add-button {
+      display: inline-block;
+      margin-bottom: 15px;
+      background-color: #4a90e2;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+
+    .add-button:hover {
+      background-color: #3d7fc2;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Складской учёт</h1>
+  <nav>
+    <a th:href="@{/}">Главная</a>
+    <a th:href="@{/products/getAll}">Товары</a>
+    <a th:href="@{/warehouses}">Склады</a>
+  </nav>
+</header>
+
+<main>
+  <h2>Список товаров</h2>
+  <a class="add-button" th:href="@{/products/new}">➕ Добавить товар</a>
+
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Название</th>
+      <th>Категория</th>
+      <th>Поставщик</th>
+      <th>Ед. изм.</th>
+      <th>Описание</th>
+      <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="p : ${products}">
+      <td th:text="${p.id}">1</td>
+      <td th:text="${p.name}">Товар</td>
+      <td th:text="${p.category.name}">Категория</td>
+      <td th:text="${p.provider.name}">Поставщик</td>
+      <td th:text="${p.unitOfMeasurement.name}">шт.</td>
+      <td th:text="${p.description}">Описание товара</td>
+      <td class="actions">
+        <a th:href="@{'/products/' + ${p.id}}">Подробнее</a>
+        <a th:href="@{'/products/edit/' + ${p.id}}">Изменить</a>
+        <a th:href="@{'/products/delete/' + ${p.id}}" style="color:red;">Удалить</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</main>
+</body>
+</html>
